@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif">
+  <title>Acme Field Services: application architecture (fictional example)</title>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .zt { font-size: 15px; font-weight: 700; letter-spacing: .4px; }
+      .n { fill: #ffffff; stroke-width: 1.6; }
+      .t { font-size: 14px; font-weight: 600; fill: #0f172a; text-anchor: middle; }
+      .s { font-size: 11.5px; fill: #475569; text-anchor: middle; }
+      .lbl { font-size: 11.5px; fill: #334155; font-weight: 600; paint-order: stroke; stroke: #ffffff; stroke-width: 5px; stroke-linejoin: round; }
+      .e { stroke: #334155; stroke-width: 1.8; fill: none; marker-end: url(#a); }
+      .e2 { stroke: #334155; stroke-width: 1.8; fill: none; marker-end: url(#a); marker-start: url(#a); }
+      .d { stroke: #64748b; stroke-width: 1.6; fill: none; stroke-dasharray: 5 4; marker-end: url(#a); }
+      .mono { font-family: 'DejaVu Sans Mono', Menlo, Consolas, monospace; font-size: 12.5px; fill: #0f172a; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="1280" height="720" fill="#ffffff"/>
+  <text x="40" y="44" font-size="24" font-weight="800" fill="#0f172a">Application architecture<tspan dx="16" font-size="15" font-weight="400" fill="#475569">Acme Field Services, a fictional Django + MongoDB work-order app</tspan></text>
+
+  <!-- USERS -->
+  <rect x="40" y="70" width="190" height="360" rx="16" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="60" y="98" class="zt" fill="#334155">USERS</text>
+  <rect x="58" y="118" width="154" height="62" rx="10" class="n" stroke="#64748b"/>
+  <text x="135" y="145" class="t">Office staff</text>
+  <text x="135" y="163" class="s">create · assign · dispatch</text>
+  <rect x="58" y="210" width="154" height="62" rx="10" class="n" stroke="#64748b"/>
+  <text x="135" y="237" class="t">Managers</text>
+  <text x="135" y="255" class="s">approve · reports</text>
+  <rect x="58" y="302" width="154" height="62" rx="10" class="n" stroke="#64748b"/>
+  <text x="135" y="329" class="t">Technicians</text>
+  <text x="135" y="347" class="s">mobile web · job updates</text>
+  <text x="135" y="408" class="s">all via browser (HTTPS)</text>
+
+  <!-- EDGE -->
+  <rect x="262" y="118" width="140" height="92" rx="10" class="n" stroke="#3B82F6"/>
+  <text x="332" y="146" class="t">Reverse proxy</text>
+  <text x="332" y="166" class="s">TLS · static files</text>
+  <text x="332" y="186" class="s">→ waitress (WSGI)</text>
+  <path d="M230,150 H258" class="e"/>
+
+  <!-- DJANGO -->
+  <rect x="440" y="70" width="520" height="490" rx="16" fill="#EAF2FE" stroke="#93C5FD" stroke-width="1.5"/>
+  <text x="462" y="98" class="zt" fill="#1D4ED8">DJANGO APPLICATION</text>
+
+  <rect x="462" y="114" width="476" height="54" rx="10" class="n" stroke="#3B82F6"/>
+  <text x="700" y="137" class="t">Middleware</text>
+  <text x="700" y="155" class="s">session · auth · CSRF · request-ID logging</text>
+  <path d="M402,141 H458" class="e2"/>
+  <text x="421" y="131" class="lbl" text-anchor="middle">HTTP</text>
+
+  <rect x="462" y="196" width="476" height="58" rx="10" class="n" stroke="#3B82F6"/>
+  <text x="700" y="219" class="t">URLconf → Views</text>
+  <text x="700" y="238" class="s">orders · dispatch · approvals · technicians · login</text>
+  <path d="M700,168 V192" class="e"/>
+
+  <rect x="462" y="286" width="220" height="56" rx="10" class="n" stroke="#3B82F6"/>
+  <text x="572" y="309" class="t">Forms</text>
+  <text x="572" y="327" class="s">input validation</text>
+  <rect x="718" y="286" width="220" height="56" rx="10" class="n" stroke="#3B82F6"/>
+  <text x="828" y="309" class="t">Templates</text>
+  <text x="828" y="327" class="s">HTML response</text>
+  <path d="M572,254 V282" class="e"/>
+  <path d="M828,254 V282" class="e"/>
+  <text x="838" y="272" class="lbl">render</text>
+
+  <rect x="462" y="374" width="300" height="66" rx="10" class="n" stroke="#1D4ED8" stroke-width="2.2"/>
+  <text x="612" y="398" class="t">Service layer</text>
+  <text x="612" y="416" class="s">business rules · can_dispatch() · flags</text>
+  <text x="612" y="432" class="s">the single write path</text>
+  <path d="M572,342 V370" class="e"/>
+
+  <rect x="792" y="374" width="146" height="66" rx="10" class="n" stroke="#3B82F6"/>
+  <text x="865" y="400" class="t">Signals</text>
+  <text x="865" y="419" class="s">on save → audit</text>
+  <path d="M762,407 H788" class="e"/>
+
+  <rect x="462" y="472" width="476" height="62" rx="10" class="n" stroke="#3B82F6"/>
+  <text x="700" y="497" class="t">Data access</text>
+  <text x="700" y="516" class="s">ODM / PyMongo · normalisers for legacy shapes (read_priority)</text>
+  <path d="M612,440 V468" class="e"/>
+
+  <!-- MONGODB -->
+  <rect x="1000" y="70" width="240" height="490" rx="16" fill="#ECFDF3" stroke="#86EFAC" stroke-width="1.5"/>
+  <text x="1022" y="98" class="zt" fill="#15803D">MONGODB</text>
+  <rect x="1020" y="120" width="200" height="44" rx="8" class="n" stroke="#16A34A"/>
+  <text x="1120" y="147" class="mono">work_orders</text>
+  <rect x="1020" y="180" width="200" height="44" rx="8" class="n" stroke="#16A34A"/>
+  <text x="1120" y="207" class="mono">technicians</text>
+  <rect x="1020" y="240" width="200" height="44" rx="8" class="n" stroke="#16A34A"/>
+  <text x="1120" y="267" class="mono">customers</text>
+  <rect x="1020" y="300" width="200" height="44" rx="8" class="n" stroke="#16A34A"/>
+  <text x="1120" y="327" class="mono">feature_flags</text>
+  <rect x="1020" y="385" width="200" height="44" rx="8" class="n" stroke="#16A34A"/>
+  <text x="1120" y="412" class="mono">audit_log</text>
+  <text x="1120" y="470" class="s">references are not enforced</text>
+  <text x="1120" y="487" class="s">by the database (see doc 03)</text>
+
+  <!-- signals write their audit entry through the data layer -->
+  <path d="M865,440 V468" class="e"/>
+  <text x="855" y="459" class="lbl" text-anchor="end">audit entry</text>
+  <!-- bus to every collection -->
+  <path d="M1006,142 V503" stroke="#16A34A" stroke-width="2" fill="none"/>
+  <path d="M1006,142 H1020 M1006,202 H1020 M1006,262 H1020 M1006,322 H1020 M1006,407 H1020" stroke="#16A34A" stroke-width="2" fill="none"/>
+  <path d="M938,503 H1002" class="e"/>
+  <text x="969" y="493" class="lbl" text-anchor="middle">r / w</text>
+
+  <!-- BACKGROUND -->
+  <rect x="40" y="590" width="920" height="100" rx="16" fill="#FEF6E7" stroke="#FCD34D" stroke-width="1.5"/>
+  <text x="60" y="618" class="zt" fill="#B45309">BACKGROUND JOBS</text>
+  <rect x="60" y="630" width="160" height="48" rx="10" class="n" stroke="#D97706"/>
+  <text x="140" y="651" class="t">Task Scheduler</text>
+  <text x="140" y="668" class="s">nightly · hourly</text>
+  <rect x="262" y="630" width="250" height="48" rx="10" class="n" stroke="#D97706"/>
+  <text x="387" y="651" class="t">Management commands</text>
+  <text x="387" y="668" class="s">daily summary · bulk import</text>
+  <rect x="740" y="630" width="200" height="48" rx="10" class="n" stroke="#D97706"/>
+  <text x="840" y="651" class="t">Email (SMTP)</text>
+  <text x="840" y="668" class="s">summary to managers</text>
+  <path d="M220,654 H258" class="e"/>
+  <path d="M512,654 H736" class="e"/>
+  <text x="624" y="644" class="lbl" text-anchor="middle">send summary</text>
+  <path d="M420,630 V407 H458" class="d"/>
+  <text x="428" y="530" class="lbl" transform="rotate(-90 428 530)" text-anchor="middle">same rules</text>
+
+  <text x="1000" y="610" class="s" text-anchor="start" style="text-anchor:start">Solid = request path</text>
+  <text x="1000" y="630" class="s" style="text-anchor:start">Dashed = background path</text>
+  <text x="1000" y="650" class="s" style="text-anchor:start">Bold box = where rules live</text>
+
+  <text x="40" y="712" font-size="11.5" fill="#94a3b8">Fictional example · CC BY 4.0 · github.com/TharunKumaarU/brownfield-django-playbook</text>
+</svg>

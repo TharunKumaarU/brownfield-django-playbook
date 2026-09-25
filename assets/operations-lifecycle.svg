@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif">
+  <title>Brownfield Django: operations and delivery lifecycle</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .zone-title { font-size: 15px; font-weight: 700; letter-spacing: .4px; }
+      .node { fill: #ffffff; stroke-width: 1.6; }
+      .t { font-size: 14px; font-weight: 600; fill: #0f172a; text-anchor: middle; }
+      .s { font-size: 11.5px; fill: #475569; text-anchor: middle; }
+      .lbl { font-size: 11.5px; fill: #334155; font-weight: 600; paint-order: stroke; stroke: #ffffff; stroke-width: 5px; stroke-linejoin: round; }
+      .edge { stroke: #334155; stroke-width: 1.8; fill: none; marker-end: url(#arrow); }
+      .cap { font-size: 12px; fill: #475569; }
+    </style>
+  </defs>
+
+  <rect width="1280" height="720" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="40" y="44" font-size="24" font-weight="800" fill="#0f172a">Brownfield Django<tspan dx="16" font-size="15" font-weight="400" fill="#475569">keep a live Django + MongoDB app running, and change it safely</tspan></text>
+
+  <!-- ZONE: Production -->
+  <rect x="40" y="70" width="590" height="320" rx="16" fill="#EAF2FE" stroke="#93C5FD" stroke-width="1.5"/>
+  <text x="62" y="98" class="zone-title" fill="#1D4ED8">PRODUCTION · WINDOWS SERVER</text>
+
+  <rect x="60" y="120" width="140" height="64" rx="10" class="node" stroke="#3B82F6"/>
+  <text x="130" y="148" class="t">Users</text>
+  <text x="130" y="166" class="s">browser · HTTPS</text>
+
+  <rect x="240" y="120" width="160" height="64" rx="10" class="node" stroke="#3B82F6"/>
+  <text x="320" y="148" class="t">Reverse proxy</text>
+  <text x="320" y="166" class="s">TLS · static files</text>
+
+  <rect x="440" y="120" width="170" height="115" rx="10" class="node" stroke="#3B82F6"/>
+  <text x="525" y="150" class="t">Django app</text>
+  <text x="525" y="170" class="s">waitress (WSGI)</text>
+  <text x="525" y="187" class="s">as a Windows service</text>
+  <text x="525" y="211" class="s">+ scheduled commands</text>
+
+  <rect x="60" y="290" width="150" height="64" rx="10" class="node" stroke="#3B82F6"/>
+  <text x="135" y="318" class="t">Release folders</text>
+  <text x="135" y="336" class="s">current → releases/…</text>
+
+  <rect x="440" y="285" width="170" height="70" rx="10" class="node" stroke="#3B82F6"/>
+  <text x="525" y="314" class="t">MongoDB</text>
+  <text x="525" y="333" class="s">localhost only</text>
+
+  <!-- production edges -->
+  <path d="M200,152 H236" class="edge"/>
+  <path d="M400,152 H436" class="edge"/>
+  <path d="M525,235 V281" class="edge"/>
+  <text x="515" y="263" class="lbl" text-anchor="end">read / write</text>
+  <path d="M210,322 H320 V212 H436" class="edge"/>
+  <text x="330" y="262" class="lbl">runs code</text>
+
+  <!-- ZONE: Observability -->
+  <rect x="660" y="70" width="580" height="150" rx="16" fill="#F3EEFE" stroke="#C4B5FD" stroke-width="1.5"/>
+  <text x="682" y="98" class="zone-title" fill="#6D28D9">OBSERVABILITY &amp; SUPPORT</text>
+
+  <rect x="690" y="115" width="165" height="64" rx="10" class="node" stroke="#7C3AED"/>
+  <text x="772" y="143" class="t">Structured logs</text>
+  <text x="772" y="161" class="s">JSON · request IDs</text>
+
+  <rect x="880" y="115" width="160" height="64" rx="10" class="node" stroke="#7C3AED"/>
+  <text x="960" y="143" class="t">Error tracking</text>
+  <text x="960" y="161" class="s">PII scrubbed</text>
+
+  <rect x="1065" y="115" width="155" height="64" rx="10" class="node" stroke="#7C3AED"/>
+  <text x="1142" y="143" class="t">Alerts</text>
+  <text x="1142" y="161" class="s">up · errors · disk</text>
+
+  <text x="690" y="205" class="cap">→ triage by severity (S1 / S2 / S3) · known-issues log · short postmortems</text>
+
+  <path d="M610,150 H686" class="edge"/>
+  <text x="648" y="140" class="lbl" text-anchor="middle">logs</text>
+
+  <!-- ZONE: Recovery -->
+  <rect x="660" y="240" width="580" height="150" rx="16" fill="#FEF6E7" stroke="#FCD34D" stroke-width="1.5"/>
+  <text x="682" y="268" class="zone-title" fill="#B45309">BACKUP &amp; RECOVERY</text>
+
+  <rect x="690" y="288" width="165" height="64" rx="10" class="node" stroke="#D97706"/>
+  <text x="772" y="316" class="t">mongodump</text>
+  <text x="772" y="334" class="s">nightly + pre-release</text>
+
+  <rect x="880" y="288" width="160" height="64" rx="10" class="node" stroke="#D97706"/>
+  <text x="960" y="316" class="t">Off-server copy</text>
+  <text x="960" y="334" class="s">SHA-256 verified</text>
+
+  <rect x="1065" y="288" width="155" height="64" rx="10" class="node" stroke="#D97706"/>
+  <text x="1142" y="316" class="t">Restore drill</text>
+  <text x="1142" y="334" class="s">timed · logged</text>
+
+  <path d="M610,320 H686" class="edge"/>
+  <text x="648" y="310" class="lbl" text-anchor="middle">dump</text>
+  <path d="M855,320 H876" class="edge"/>
+  <path d="M1040,320 H1061" class="edge"/>
+
+  <!-- ZONE: Change pipeline -->
+  <rect x="40" y="420" width="1200" height="230" rx="16" fill="#ECFDF3" stroke="#86EFAC" stroke-width="1.5"/>
+  <text x="180" y="448" class="zone-title" fill="#15803D">CHANGE PIPELINE · EVERY ENHANCEMENT</text>
+
+  <rect x="1040" y="490" width="180" height="70" rx="10" class="node" stroke="#16A34A"/>
+  <text x="1130" y="520" class="t">Scrubbed snapshot</text>
+  <text x="1130" y="539" class="s">no real personal data</text>
+
+  <rect x="800" y="490" width="180" height="70" rx="10" class="node" stroke="#16A34A"/>
+  <text x="890" y="520" class="t">Local Docker</text>
+  <text x="890" y="539" class="s">versions pinned to prod</text>
+
+  <rect x="540" y="490" width="200" height="70" rx="10" class="node" stroke="#16A34A"/>
+  <text x="640" y="520" class="t">Tests</text>
+  <text x="640" y="539" class="s">characterization + unit</text>
+
+  <rect x="300" y="490" width="180" height="70" rx="10" class="node" stroke="#16A34A"/>
+  <text x="390" y="520" class="t">Staging demo</text>
+  <text x="390" y="539" class="s">requester signs off</text>
+
+  <rect x="60" y="490" width="180" height="70" rx="10" class="node" stroke="#16A34A"/>
+  <text x="150" y="520" class="t">release.ps1</text>
+  <text x="150" y="539" class="s">backup · switch · smoke</text>
+
+  <path d="M1040,525 H984" class="edge"/>
+  <text x="1012" y="514" class="lbl" text-anchor="middle">seed</text>
+  <path d="M800,525 H744" class="edge"/>
+  <text x="772" y="514" class="lbl" text-anchor="middle">build</text>
+  <path d="M540,525 H484" class="edge"/>
+  <text x="512" y="514" class="lbl" text-anchor="middle">pass</text>
+  <path d="M300,525 H244" class="edge"/>
+  <text x="272" y="514" class="lbl" text-anchor="middle">ship</text>
+
+  <text x="62" y="600" class="cap">Scope note signed off → code behind a feature flag → data changes via expand · migrate · contract (idempotent backfills)</text>
+  <text x="62" y="622" class="cap">Rollback = point <tspan font-family="'DejaVu Sans Mono', monospace">current</tspan> at the previous release and restart the service · flag off = today's behaviour</text>
+
+  <!-- cross-zone edges -->
+  <path d="M135,490 V358" class="edge"/>
+  <text x="145" y="410" class="lbl">deploy</text>
+  <path d="M1142,352 V486" class="edge"/>
+  <text x="1132" y="410" class="lbl" text-anchor="end">restore + scrub</text>
+
+  <!-- footer -->
+  <text x="40" y="690" font-size="11.5" fill="#94a3b8">Generic reference diagram · fictional example · CC BY 4.0 · github.com/TharunKumaarU/brownfield-django-playbook</text>
+</svg>

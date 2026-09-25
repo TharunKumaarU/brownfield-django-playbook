@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif">
+  <title>Acme Field Services: work-order workflow (fictional example)</title>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .lane { font-size: 14px; font-weight: 700; fill: #334155; }
+      .n { fill: #ffffff; stroke-width: 1.6; }
+      .t { font-size: 14px; font-weight: 600; fill: #0f172a; text-anchor: middle; }
+      .s { font-size: 11.5px; fill: #475569; text-anchor: middle; }
+      .st { font-family: 'DejaVu Sans Mono', Menlo, Consolas, monospace; font-size: 11px; fill: #1D4ED8; text-anchor: middle; }
+      .lbl { font-size: 11.5px; fill: #334155; font-weight: 600; paint-order: stroke; stroke: #ffffff; stroke-width: 5px; stroke-linejoin: round; }
+      .e { stroke: #334155; stroke-width: 1.8; fill: none; marker-end: url(#a); }
+      .d { stroke: #64748b; stroke-width: 1.6; fill: none; stroke-dasharray: 5 4; marker-end: url(#a); }
+    </style>
+  </defs>
+
+  <rect width="1280" height="720" fill="#ffffff"/>
+  <text x="40" y="44" font-size="24" font-weight="800" fill="#0f172a">Business workflow<tspan dx="16" font-size="15" font-weight="400" fill="#475569">life of a work order in Acme Field Services (fictional)</tspan></text>
+
+  <!-- lanes -->
+  <rect x="40" y="70" width="1200" height="140" rx="12" fill="#EAF2FE" stroke="#93C5FD"/>
+  <rect x="40" y="220" width="1200" height="140" rx="12" fill="#F3EEFE" stroke="#C4B5FD"/>
+  <rect x="40" y="370" width="1200" height="140" rx="12" fill="#ECFDF3" stroke="#86EFAC"/>
+  <rect x="40" y="520" width="1200" height="150" rx="12" fill="#FEF6E7" stroke="#FCD34D"/>
+  <text x="58" y="145" class="lane">Office staff</text>
+  <text x="58" y="295" class="lane">Manager</text>
+  <text x="58" y="445" class="lane">Technician</text>
+  <text x="58" y="600" class="lane">System</text>
+
+  <!-- lane 1 -->
+  <rect x="175" y="112" width="150" height="76" rx="10" class="n" stroke="#3B82F6"/>
+  <text x="250" y="139" class="t">Create order</text>
+  <text x="250" y="157" class="s">customer · job · priority</text>
+  <text x="250" y="176" class="st">status: new</text>
+
+  <rect x="365" y="112" width="150" height="76" rx="10" class="n" stroke="#3B82F6"/>
+  <text x="440" y="139" class="t">Assign technician</text>
+  <text x="440" y="157" class="s">skills · availability</text>
+  <text x="440" y="176" class="st">status: assigned</text>
+
+  <polygon points="620,108 680,150 620,192 560,150" class="n" stroke="#334155"/>
+  <text x="620" y="148" class="t" style="font-size:12.5px">Priority 1?</text>
+  <text x="620" y="164" class="s">rule</text>
+
+  <rect x="740" y="112" width="150" height="76" rx="10" class="n" stroke="#3B82F6"/>
+  <text x="815" y="139" class="t">Dispatch</text>
+  <text x="815" y="157" class="s">job sent to technician</text>
+  <text x="815" y="176" class="st">status: dispatched</text>
+
+  <rect x="1060" y="112" width="160" height="76" rx="10" class="n" stroke="#3B82F6"/>
+  <text x="1140" y="139" class="t">Review &amp; close</text>
+  <text x="1140" y="157" class="s">check notes · sign-off</text>
+  <text x="1140" y="176" class="st">status: closed</text>
+
+  <path d="M325,150 H361" class="e"/>
+  <path d="M515,150 H556" class="e"/>
+  <path d="M680,150 H736" class="e"/>
+  <text x="708" y="140" class="lbl" text-anchor="middle">no</text>
+
+  <!-- lane 2 -->
+  <rect x="545" y="262" width="150" height="76" rx="10" class="n" stroke="#7C3AED"/>
+  <text x="620" y="289" class="t">Review request</text>
+  <text x="620" y="307" class="s">approve or reject</text>
+  <text x="620" y="326" class="st">awaiting_approval</text>
+
+  <path d="M620,192 V258" class="e"/>
+  <text x="630" y="230" class="lbl">yes</text>
+  <path d="M695,300 H790 V192" class="e"/>
+  <text x="742" y="290" class="lbl" text-anchor="middle">approved</text>
+  <path d="M545,300 H440 V192" class="e"/>
+  <text x="492" y="290" class="lbl" text-anchor="middle">rejected</text>
+  <text x="492" y="322" class="s">edit &amp; resubmit</text>
+
+  <!-- lane 3 -->
+  <rect x="740" y="412" width="150" height="76" rx="10" class="n" stroke="#16A34A"/>
+  <text x="815" y="439" class="t">Start job</text>
+  <text x="815" y="457" class="s">on site</text>
+  <text x="815" y="476" class="st">status: in_progress</text>
+
+  <rect x="950" y="412" width="150" height="76" rx="10" class="n" stroke="#16A34A"/>
+  <text x="1025" y="439" class="t">Complete job</text>
+  <text x="1025" y="457" class="s">notes · photos</text>
+  <text x="1025" y="476" class="st">status: completed</text>
+
+  <path d="M850,188 V408" class="e"/>
+  <path d="M890,450 H946" class="e"/>
+  <path d="M1080,412 V192" class="e"/>
+
+  <!-- lane 4 -->
+  <rect x="175" y="560" width="340" height="80" rx="10" class="n" stroke="#D97706"/>
+  <text x="345" y="590" class="t">Audit log</text>
+  <text x="345" y="609" class="s">every status change is recorded</text>
+  <text x="345" y="626" class="s">(who · when · from → to)</text>
+
+  <rect x="545" y="560" width="460" height="80" rx="10" class="n" stroke="#D97706"/>
+  <text x="775" y="590" class="t">Feature flag: approvals_v1</text>
+  <text x="775" y="609" class="s">flag off → the "Priority 1?" check is skipped</text>
+  <text x="775" y="626" class="s">and orders go straight to dispatch (old behaviour)</text>
+
+  <rect x="1060" y="560" width="160" height="80" rx="10" class="n" stroke="#D97706"/>
+  <text x="1140" y="590" class="t">Nightly summary</text>
+  <text x="1140" y="609" class="s">email to managers</text>
+  <text x="1140" y="626" class="s">(scheduled job)</text>
+
+  <path d="M1190,188 V556" class="d"/>
+  <text x="1180" y="300" class="lbl" text-anchor="end">counted</text>
+
+  <text x="40" y="700" font-size="11.5" fill="#94a3b8">Fictional example · CC BY 4.0 · github.com/TharunKumaarU/brownfield-django-playbook</text>
+</svg>
