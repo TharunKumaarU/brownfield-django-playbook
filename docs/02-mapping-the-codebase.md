@@ -6,6 +6,8 @@ Django projects follow conventions, and conventions are a map. Start from the ed
 
 ## The request path
 
+The [application architecture diagram](../assets/app-architecture.svg) shows the full picture for the example app. The simplified path below is what to trace first.
+
 ```mermaid
 flowchart LR
     B["Browser"] --> P["Reverse proxy"]

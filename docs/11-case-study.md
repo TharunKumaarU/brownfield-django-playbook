@@ -1,6 +1,8 @@
 # 11 · Case study: one enhancement, end to end
 
 > A fictional walk-through that ties docs 01–10 together. Acme Field Services, its people and its data are invented.
+>
+> See the [business workflow diagram](../assets/business-workflow.svg) for the finished flow this enhancement produces.
 
 ## The request
 
