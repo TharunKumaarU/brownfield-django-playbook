@@ -1,0 +1,25 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Python (code sketches)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+
+# Data & dumps: never commit real data
+*.bson
+*.archive
+*.gz
+dumps/
+backups/
+
+# Local-only assets (e.g. the LinkedIn PNG)
+assets/*.png
+scratch/
