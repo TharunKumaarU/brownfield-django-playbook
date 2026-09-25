@@ -7,13 +7,35 @@ Someone hands you the keys to an app that's already in production. The original 
 This playbook is what I wish I'd had on day one. It's a practical, opinionated guide to the unglamorous part of software work: **keeping a system you didn't build running, and changing it without breaking it.**
 
 <p align="center">
-  <img src="assets/architecture.svg" alt="Brownfield workflow: a production Django + MongoDB app on a Windows server, mirrored into a scrubbed staging copy, with changes flowing through tests, a release pipeline, backups and monitoring" width="100%">
+  <img src="assets/app-architecture.svg" alt="Application architecture of the fictional Acme Field Services app: users reach a reverse proxy and waitress, requests pass through Django middleware, URLconf and views, forms and templates, a service layer holding the business rules, and a data-access layer that reads and writes MongoDB collections; scheduled management commands reuse the same service layer" width="100%">
 </p>
 
 > **Provenance & disclaimer**
 > This is a personal project. It distills general lessons from my own experience supporting and enhancing production web applications. Everything here was written from scratch for this repository: every code sketch, diagram, schema and example is original and generic. "Acme Field Services" and all data, names and numbers are fictional. The repo contains no proprietary code, documents, designs or business rules from any employer or client. It is not affiliated with, sponsored by or endorsed by any employer or client, past or present.
 
 ---
+
+## Diagrams
+
+Three original diagrams of the fictional **Acme Field Services** app. Each answers a different question.
+
+| Diagram | Question it answers |
+|---------|---------------------|
+| [Application architecture](assets/app-architecture.svg) (above) | How does a request travel through the code, and where do the rules live? |
+| [Business workflow](assets/business-workflow.svg) | What happens to a work order, who does each step, and what status does it hold? |
+| [Operations & delivery lifecycle](assets/operations-lifecycle.svg) | How is the app deployed, monitored, backed up and changed safely? |
+
+### Business workflow
+
+<p align="center">
+  <img src="assets/business-workflow.svg" alt="Swimlane workflow of a fictional work order: office staff create, assign and dispatch; priority-1 orders need manager approval first; technicians start and complete the job; office staff review and close; the system records an audit entry for every status change and sends a nightly summary" width="100%">
+</p>
+
+### Operations & delivery lifecycle
+
+<p align="center">
+  <img src="assets/operations-lifecycle.svg" alt="Operations lifecycle: production on a Windows server, observability and support, backup and recovery with restore drills, and a change pipeline from scrubbed snapshot through tests and staging to a scripted release with rollback" width="100%">
+</p>
 
 ## Contents
 
