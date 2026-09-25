@@ -9,7 +9,7 @@ Plenty of Django apps run on Windows servers, often because that's what the orga
 ```mermaid
 flowchart TB
     U["Users (HTTPS)"] --> RP["Reverse proxy<br/>IIS + URL Rewrite/ARR, or Caddy/nginx<br/>TLS · static files · /media"]
-    RP -- "127.0.0.1:8001" --> SVC["Windows service (NSSM)<br/>waitress → Django WSGI"]
+    RP -- "127.0.0.1:8080" --> SVC["Windows service (NSSM)<br/>waitress → Django WSGI"]
     SVC --> CUR["C:\apps\acme\current<br/>(junction → releases\2026-03-14_1)"]
     SVC --> DB[("MongoDB service<br/>bound to localhost")]
     SCHED["Task Scheduler<br/>management commands"] --> CUR
@@ -51,7 +51,7 @@ from acme.wsgi import application
 serve(
     application,
     host="127.0.0.1",
-    port=int(os.environ.get("ACME_PORT", "8001")),
+    port=int(os.environ.get("ACME_PORT", "8080")),
     threads=int(os.environ.get("ACME_THREADS", "8")),
     url_scheme="https",          # proxy terminates TLS
     trusted_proxy="127.0.0.1",
@@ -86,7 +86,7 @@ $Venv     = "$Root\venvs\$Stamp"
 $Previous = (Get-Item "$Root\current").Target
 
 Write-Host "1/7 unpack";         Expand-Archive $Artifact -DestinationPath $Release
-Write-Host "2/7 venv";           py -3.11 -m venv $Venv
+Write-Host "2/7 venv";           py -3.12 -m venv $Venv
 & "$Venv\Scripts\pip.exe" install --no-cache-dir -r "$Release\requirements.txt"
 New-Item -ItemType Junction -Path "$Release\.venv-link" -Target $Venv | Out-Null
 Copy-Item "$Root\shared\.env" "$Release\.env"
